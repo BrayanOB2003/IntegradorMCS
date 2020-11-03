@@ -1,7 +1,7 @@
 package model;
 
 public class PrivatePL extends PlayList{
-    private User userAcces;
+    private User userAccess;
     
     public PrivatePL(String name, User userAccess){
         super(name);

@@ -52,7 +52,7 @@ public class User {
     }
 
     public void setSharedSongs(int sharedSongs) {
-        this.sharedSongs = sharedSongs;
+        this.sharedSongs += sharedSongs;
     }
 
     private String userCategoy(){
