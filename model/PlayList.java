@@ -3,11 +3,12 @@ package model;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public abstract class PlayList {
+public class PlayList {
     private String name;
     private String duration;
     private String genders;
     private ArrayList<Song> songs;
+    
     public PlayList(String name) {
         this.name = name;
         
@@ -73,31 +74,39 @@ public abstract class PlayList {
         Iterator<String> all = allGenders.iterator();
         
         String comparation = "";
-        String playListGenders = "";
+        String playListGenders = "Desconocido";
         int cont = 0;
         
-        for(int i = 0; i < songs.size(); i++){
-            allGenders.add(songs.get(i).getGender());
-        }
-        
-        for(int i = 0; i < allGenders.size(); i++){
-            while(all.hasNext()){
-                comparation = all.next();
-                if(allGenders.get(i).equals(comparation)){
-                    cont++;
-                    if(cont == 2){
-                        all.remove();
-                        cont--;
+        if(songs == null || songs.size() == 0){
+            
+        }else{
+            for(int i = 0; i < songs.size(); i++){
+                if(songs != null){
+                    allGenders.add(songs.get(i).getGender());
+                }
+            }
+
+            for(int i = 0; i < allGenders.size(); i++){
+                while(all.hasNext()){
+                    comparation = all.next();
+                    if(allGenders.get(i).equals(comparation)){
+                        cont++;
+                        if(cont == 2){
+                            all.remove();
+                            cont--;
+                        }
                     }
                 }
             }
+        
+            while(all.hasNext()){
+
+                playListGenders += all.next() + ",";
+            }
         }
         
-        while(all.hasNext()){
+        playListGenders = playListGenders.substring(playListGenders.length()-1,playListGenders.length());
         
-            playListGenders += all.next() + ",";
-        }
-            
         return playListGenders;
     }
     

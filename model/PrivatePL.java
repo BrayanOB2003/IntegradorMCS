@@ -14,5 +14,5 @@ public class PrivatePL extends PlayList{
 
     public void setUserAccess(User userAccess) {
         this.userAccess = userAccess;
-    }
+    }   
 }
