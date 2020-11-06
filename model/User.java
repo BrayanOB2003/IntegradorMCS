@@ -11,7 +11,7 @@ public class User {
         this.name = name;
         this.password = password;
         this.age = age;
-        this.category = userCategoy();
+        this.category = "Newbie";
         sharedSongs = 0;    
     }
 
@@ -52,10 +52,10 @@ public class User {
     }
 
     public void setSharedSongs(int sharedSongs) {
-        this.sharedSongs += sharedSongs;
+        this.sharedSongs = sharedSongs;
     }
 
-    private String userCategoy(){
+    public void upgrapeUserCategoy(){
         
         String clasification;
         
@@ -69,6 +69,11 @@ public class User {
             clasification = String.valueOf(Categories.StarContributor);
         }
         
-        return clasification;
+        category = clasification;
+    }
+    
+    public void upgrapeShredSongs(int song){
+    
+        sharedSongs += song;
     }
 }

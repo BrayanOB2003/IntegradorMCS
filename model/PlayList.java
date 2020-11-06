@@ -1,9 +1,8 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
-public class PlayList {
+public abstract class PlayList {
     private String name;
     private String duration;
     private String genders;
@@ -12,9 +11,9 @@ public class PlayList {
     public PlayList(String name) {
         this.name = name;
         
-        duration = durationConvertion();
+        duration = "00:00";
         songs = new ArrayList<Song>();
-        genders = playListGenders();
+        genders = "Desconocido";
     }
 
     public String getName() {
@@ -40,74 +39,79 @@ public class PlayList {
     public void setGenders(String genders) {
         this.genders = genders;
     }
-     
-    private String durationConvertion(){
-        
-        String duration = "";
+
+    public ArrayList<Song> getSongs() {
+        return songs;
+    }
+
+    public void setSongs(ArrayList<Song> songs) {
+        this.songs = songs;
+    }
+    
+    public void addAllSong(Song song){
+        songs.add(song);
+    }
+    
+    public void upgrapePLayList(){
+
         int second = 0;
         int min = 0;
         int hours = 0;
         
         for(int i = 0; i < songs.size(); i++){
-        
-            min  += Integer.parseInt(songs.get(i).getDuration().substring(0, 1));
-            second += Integer.parseInt(songs.get(i).getDuration().substring(2,4));
+
+            min  += Integer.parseInt(songs.get(i).getDuration().substring(0, 2));
+            second += Integer.parseInt(songs.get(i).getDuration().substring(3,5));
         }
-        
+
         while(second >= 60){
             min++;
             second -= 60;
         }
-        
-       while(min >= 60){
+
+        while(min >= 60){
            hours++;
            min -=60;
-       }
+        }
+
+        duration = String.valueOf(hours) + ":" + String.valueOf(min) + ":" + String.valueOf(second);
         
-       duration = String.valueOf(hours) + ":" + String.valueOf(min) + ":" + String.valueOf(second);
-       
-       return duration;
-    }
-    
-    private String playListGenders(){
-        ArrayList<String> allGenders = new ArrayList<String>();
-        Iterator<String> all = allGenders.iterator();
-        
-        String comparation = "";
-        String playListGenders = "Desconocido";
+        final int MAX_GENDERS = 6;
+        String[] allGenders = new String[MAX_GENDERS];
+        String genders = "";
         int cont = 0;
         
-        if(songs == null || songs.size() == 0){
+        if(songs == null || songs.isEmpty()){
             
         }else{
             for(int i = 0; i < songs.size(); i++){
-                if(songs != null){
-                    allGenders.add(songs.get(i).getGender());
+                for(int j = 0; j < allGenders.length; j++){
+                    if(songs.get(i).getGender().equals(allGenders[j])){
+                      cont++;
+                    }
                 }
-            }
-
-            for(int i = 0; i < allGenders.size(); i++){
-                while(all.hasNext()){
-                    comparation = all.next();
-                    if(allGenders.get(i).equals(comparation)){
-                        cont++;
-                        if(cont == 2){
-                            all.remove();
-                            cont--;
+                
+                if(cont == 0){
+                    for(int j = 0; j < allGenders.length; j++){
+                        if(allGenders[j] == null){
+                            allGenders[j] = songs.get(i).getGender();
+                            j = allGenders.length;
                         }
                     }
                 }
             }
-        
-            while(all.hasNext()){
-
-                playListGenders += all.next() + ",";
+            
+            for(int i = 0; i < allGenders.length; i++){
+                if(allGenders[i] != null){
+                    genders += allGenders[i] + ", ";
+                }
             }
+            
+            this.genders = genders.substring(0,genders.length() - 2);
         }
         
-        playListGenders = playListGenders.substring(playListGenders.length()-1,playListGenders.length());
         
-        return playListGenders;
     }
     
+    public abstract String showInformation();
 }

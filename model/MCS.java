@@ -15,6 +15,38 @@ public class MCS {
         poolSongs = new Song[MAX_SONGS];
         userAccess = -1;
     }
+
+    public int getUserAccess() {
+        return userAccess;
+    }
+
+    public void setUserAccess(int userAccess) {
+        this.userAccess = userAccess;
+    }
+
+    public User[] getUsers() {
+        return users;
+    }
+
+    public void setUsers(User[] users) {
+        this.users = users;
+    }
+
+    public PlayList[] getPlayLists() {
+        return playLists;
+    }
+
+    public void setPlayLists(PlayList[] playLists) {
+        this.playLists = playLists;
+    }
+
+    public Song[] getPoolSongs() {
+        return poolSongs;
+    }
+
+    public void setPoolSongs(Song[] poolSongs) {
+        this.poolSongs = poolSongs;
+    }
     
     public String loginUser(String name, String password){
         String access = "";
@@ -22,9 +54,9 @@ public class MCS {
         for(int i = 0; i < users.length; i++){
             if(users[i] != null){
                 if(users[i].getName().equals(name) && users[i].getPassword().equals(password)){
-                    userAccess = i;
+                    setUserAccess(i);
                     access = "\n\nEl usuario " + users[i].getName() + " ingreso correctamente.";
-                    break;
+                    i = users.length;
                 } else {
                     access = "\n\nEl usuario no se encuentra registrado.";
                 }
@@ -32,13 +64,6 @@ public class MCS {
         }
         
         return access;
-    }
-    
-    public String signOff(){
-    
-        String signOff = "";
-        
-        return signOff;
     }
     
     public String addUser(String name, String password, int age){
@@ -49,6 +74,7 @@ public class MCS {
             if(users[i] == null){
                 users[i] = user;
                 userRegister = "\n\nEl usuario se añadio correctamente.";
+                i = users.length;
             } else{            
                 userRegister = "\n\nEl limite de usuarios ha sido superado, no se pudo agregar.";
             }
@@ -62,7 +88,7 @@ public class MCS {
         
         for(int i=0; i < users.length; i++){
             if(users[i] != null){
-                userInfo +=  "*************  User **************\n"; 
+                userInfo += "*************  User **************\n"; 
                 userInfo += "**  UserName: " + users[i].getName() + "\n";
                 userInfo += "**  Age: " + users[i].getAge() + "\n";
                 userInfo += "**  Category: " + users[i].getCategory() + "\n";
@@ -80,9 +106,10 @@ public class MCS {
             for(int i = 0; i < poolSongs.length; i++){
                 if(poolSongs[i] == null){
                     poolSongs[i] = addSong;
-                    users[userAccess].setSharedSongs(1);
+                    users[userAccess].upgrapeShredSongs(1);
+                    users[userAccess].upgrapeUserCategoy();
                     addTrue = "\n\nSe añadio correctamente al pool de canciones.";
-                    break;
+                    i = poolSongs.length;
                 }
             }
         }
@@ -110,43 +137,64 @@ public class MCS {
     }
     
     //PlayList privada
-    public String addPrivatePL(String name, int userAccess){ //Añadir playList privada
-        String addTrue = "";
-        PlayList newPlayList = new PrivatePL(name, users[userAccess]);
+    public String addPrivatePL(String name){ //Añadir playList privada
+        String addTrue = "Debes logearte primero";
+        if(userAccess > -1){
+            PlayList newPlayList = new PrivatePL(name, users[userAccess]);
+            
+            for(int i = 0; i < playLists.length; i++){
+
+                if(playLists[i] == null){
+                    playLists[i] = newPlayList;
+
+                    addTrue = "\n\nSe añadio la playList correctamente.";
+                    break;
+                } else {
+                    addTrue = "\n\nNo se pueden agregar mas playList, limite alcanzado.";
+                }
+            }
+        }
         
-        for(int i = 0; i < playLists.length; i++){
-         
-            if(playLists[i] == null){
-                playLists[i] = newPlayList;
-                
-                addTrue = "\n\nSe añadio la playList correctamente.";
-                break;
-            } else {
-                addTrue = "\n\nNo se pueden agregar mas playList, limite alcanzado.";
+        return addTrue;
+    }
+    
+   //PLayList restringidas
+    public String addRestrictedPL(String name){  //Añadir playList restringida
+        String addTrue = "Debes logearte primero.";
+        
+        if(userAccess > -1){
+            PlayList newPlayList = new RestrictedPL(name, users[userAccess]);
+            
+            for(int i = 0; i < playLists.length; i++){
+
+                if(playLists[i] == null){
+                    playLists[i] = newPlayList;
+
+                    addTrue = "\n\nSe añadio la playList correctamente, 1 de 5 usuarios tienen acceso.";
+                    break;
+                } else {
+                    addTrue = "\n\nNo se pueden agregar mas playList, limite alcanzado.";
+                }
             }
         }
             
         return addTrue;
     }
     
-   //PLayList restringidas
-    public String addRestrictedPL(String name, int userAccess){  //Añadir playList restringida
-        String addTrue = "";
-        PlayList newPlayList = new RestrictedPL(name, users[userAccess]);
+    public String upgrapePlayList(){
+    
+        String durationUpgrape = "";
         
         for(int i = 0; i < playLists.length; i++){
-         
-            if(playLists[i] == null){
-                playLists[i] = newPlayList;
-                
-                addTrue = "\n\nSe añadio la playList correctamente, 1 de 5 usuarios tienen acceso.";
-                break;
-            } else {
-                addTrue = "\n\nNo se pueden agregar mas playList, limite alcanzado.";
+        
+            if(playLists[i] != null){
+                playLists[i].upgrapePLayList();
             }
         }
         
-        return addTrue = "";
+        durationUpgrape = "Se actualizo correctamente.";
+        
+        return durationUpgrape; 
     }
    
     public String addUserAccess(int restrictedPL, int userAccess){
@@ -167,7 +215,7 @@ public class MCS {
 
                 playLists[i] =  newPlayList;
                 addTrue = "\n\nSe añadio la playList correctamente.";
-                break;
+                i = playLists.length;
             }else {
                 addTrue = "\n\nNo se pueden agregar mas playList, limite alcanzado.";
             }
@@ -176,49 +224,55 @@ public class MCS {
         return addTrue;
     }
     
-    public String addCalificationPL(int playList, int calification){
+    public String addCalificationPL(int playList, float calification){
         
         String addTrue = "";
         
-        PublicPL addCalification = (PublicPL)playLists[playList];
+        PublicPL addCalification = (PublicPL)playLists[playList-1];
         addCalification.averageMark(calification);
                 
         return addTrue;
     }
     
-    public String showPlayList(){
-    String allPlatList = "";
-    String restringedUsers = "";
+    public String addSongPrivate(int playList, int song){
     
-    for(int i = 0; i < playLists.length; i++){
-        if(playLists[i] != null){
-            allPlatList += "**************  Playlist **************\n";
-            allPlatList += "**  Title: " + playLists[i].getName() + "\n";
-            allPlatList += "**  Duration: " + playLists[i].getDuration() + "\n";
-            allPlatList += "**  Genre: " + playLists[i].getGenders() + "\n";
-            
-            if(playLists[i] instanceof PublicPL){
-                PublicPL publicPL = (PublicPL)playLists[i];
-                allPlatList += "**  Calification: " + publicPL.getAverageMark() + "\n\n";
-            }else if(playLists[i] instanceof RestrictedPL){
-                RestrictedPL restrictedPL = (RestrictedPL)playLists[i];
+        String addTrue;
+        
+            PrivatePL privatePL = (PrivatePL)playLists[playList];
+            addTrue = privatePL.addSong(poolSongs[song], users[userAccess]);
                 
-                for (int j = 0; j < restrictedPL.getUserAccess().length; j++){
-                    
-                    if(restrictedPL.getUserAccess()[j] != null){
-                        restringedUsers += restrictedPL.getUserAccess()[i].getName() + ", ";
-                    }
-                }
-                
-                allPlatList += "**  Usuarios con acceso: " + restringedUsers.substring(restringedUsers.length() - 1, restringedUsers.length()) + "\n\n";
-                
-            }else{
-                PrivatePL privatePL = (PrivatePL)playLists[i];
-                allPlatList += "**  Usuario con acceso: " + privatePL.getUserAccess().getName() + "\n\n";
-            }
-        }
+        return addTrue;
     }
     
-    return allPlatList;
+    public String addSongRestricted(int playList, int song){
+    
+        String addTrue;
+        
+        RestrictedPL restrictedPL = (RestrictedPL) playLists[playList];
+        addTrue = restrictedPL.addSong(poolSongs[song], users[userAccess]);
+        
+        return addTrue;
+    }
+    
+    public String addSongPublic(int playList, int song){
+    
+        String addTrue;
+        
+        PublicPL publicPL = (PublicPL) playLists[playList];
+        addTrue = publicPL.addSong(poolSongs[song]);
+        
+        return addTrue;
+    }
+    
+    public String showPlayList(){
+        String allInfo = "";
+    
+        for(int i = 0; i < playLists.length; i++){
+            if(playLists[i] != null){
+                allInfo += playLists[i].showInformation();
+            }
+        }
+        
+        return allInfo;
     }
 }
