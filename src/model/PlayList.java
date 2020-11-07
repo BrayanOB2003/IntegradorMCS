@@ -52,6 +52,12 @@ public abstract class PlayList {
         songs.add(song);
     }
     
+    /**
+     * Updates the information that varies according to the added songs. <br>
+     * <b> pre: </b> A song must be added to the playlist <br>
+     * <b> post: </b> The duration and genre data of the playList are updated.
+     */
+    
     public void upgrapePLayList(){
 
         int second = 0;

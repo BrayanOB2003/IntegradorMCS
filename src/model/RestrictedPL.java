@@ -18,6 +18,14 @@ public class RestrictedPL extends PlayList{
         this.userAccess = userAccess;
     }
     
+    /**
+     * Add selected user. <br>
+     * <b> pre: </b> A restricted playList has been created. <br>
+     * <b> post: </b> User has been given access.
+     * @param userAccess user to which access will be given. userAccess! = null.
+     * @Return
+     */
+    
     public String addUserAccess(User userAccess){
         String addTrue = "";
         int cont = 0;
@@ -49,6 +57,15 @@ public class RestrictedPL extends PlayList{
         
     }
     
+    /**
+     * Add song to playlist. <br>
+     * <b> pre: </b> User access previously logged in and existing song in pool. <br>
+     * <b> post: </b> The song is added to the playList.
+     * @param song song from the song pool. song! = null.
+     * @param access user logged into the program. access! = null && access == userAcces [].
+     * @return 
+     */
+    
     public String addSong(Song song, User access){
         String addTrue = "";
         
@@ -65,6 +82,13 @@ public class RestrictedPL extends PlayList{
         return addTrue;
     }
     
+    /**
+     * Update names of users with access to the playList. <br>
+     * <b> pre: </b> There must be users with access to the playList. <br>
+     * <b> post: </b> The updated user names are returned.
+     * @return
+     */
+    
     public String updateAccess(){
         String restringedUsers = "";
     
@@ -80,6 +104,13 @@ public class RestrictedPL extends PlayList{
         return restringedUsers;
     }
     
+    
+    /**
+     * Show information from the playlist <br>
+     * <b> pre: </b> Playlist created and updated. <br>
+     * <b> post: </b> They return all the updated information from the playList.
+     * @return
+     */
     @Override
     public String showInformation(){
         String allInfo = "";

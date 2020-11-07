@@ -20,6 +20,14 @@ public class PublicPL extends PlayList{
         this.averageMark = averageMark;
     }
     
+    /**
+     * Calcula el promedio de calificaciones.<br>
+     * <b> pre: </b> La playList esta creada <br>
+     * <b> post: </b> Calcula el promedio de calificaciones.
+     * @param calification calificacion dada por el usuario. califiction >= 0 && 5 >= calification.
+     * @return 
+     */
+    
     public String averageMark(float calification){
         String mark = "";
         
@@ -32,6 +40,14 @@ public class PublicPL extends PlayList{
         return mark;
     }
     
+    /**
+     * Add song to playlist.<br>
+     * <b> pre: </b> User access previously logged in and existing song in pool.<br>
+     * <b> post: </b> The song is added to the playList.
+     * @param song song from the song pool. song! = null.
+     * @return 
+     */
+    
     public String addSong(Song song){
         String addTrue = "";
         addAllSong(song);
@@ -39,6 +55,13 @@ public class PublicPL extends PlayList{
         
         return addTrue;
     }
+    
+    /**
+     * Show information from the playlist <br>
+     * <b> pre: </b> Playlist created and updated. <br>
+     * <b> post: </b> They return all the updated information from the playList.
+     * @return
+     */
     
     @Override
     public String showInformation(){

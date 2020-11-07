@@ -55,6 +55,13 @@ public class User {
         this.sharedSongs = sharedSongs;
     }
 
+    
+    /**
+     * Update user category <br>
+     * <b> pre: </b> User logged in <br>
+     * <b> post: </b> As you add songs, the user's category is updated.
+     */
+    
     public void upgrapeUserCategoy(){
         
         String clasification;
@@ -71,6 +78,13 @@ public class User {
         
         category = clasification;
     }
+    
+    /**
+     * Update number of songs shared by the user. <br>
+     * <b> pre: </b> User logged in <br>
+     * <b> post: </b> Increase sharedSongs every time the user adds a song to the poolSongs.
+     * @param song number of songs shared. song == 1.
+     */
     
     public void upgrapeShredSongs(int song){
     

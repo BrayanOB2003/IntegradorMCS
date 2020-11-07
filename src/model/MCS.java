@@ -48,6 +48,16 @@ public class MCS {
         this.poolSongs = poolSongs;
     }
     
+    
+    /**
+     * User login <br>
+     * <b> pre: </b> The user must be created before logging in <br>
+     * <b> post: </b> The user enters the system. <br>
+     * @param name name of the user. name! = null.
+     * @param password password of the user. password! = null.
+     * @return
+     */
+    
     public String loginUser(String name, String password){
         String access = "";
         
@@ -66,6 +76,17 @@ public class MCS {
         return access;
     }
     
+    
+    /**
+     * Add user <br>
+     * <b> pre: </b> <br>
+     * <b> post: </b> The user is added to the system. 
+     * @param name name of the user. name! = null.
+     * @param password password of the user. password! = null.
+     * @param age age of the user. age! = null.
+     * @return
+     */
+    
     public String addUser(String name, String password, int age){
         User user = new User(name, password, age);
         String userRegister = "";
@@ -83,6 +104,14 @@ public class MCS {
         return userRegister;
     }
     
+    
+    /**
+     * Show information of all users. <br>
+     * <b> pre: </b> Users created <br>
+     * <b> post: </b> The information of all registered users is displayed. 
+     * @return
+     */
+    
     public String showUsers(){
         String userInfo = "";
         
@@ -98,6 +127,18 @@ public class MCS {
         
         return userInfo;
     }
+    
+    /**
+     * Add song to song pool. <br>
+     * <b> pre: </b> A user must be logged in. <br>
+     * <b> post: </b> Song is added to the song pool.
+     * @param title title of the song. title! = null.
+     * @param artistName name of the artist or band. artistName! = null.
+     * @param releaseDate release date. releaseDate! = null.
+     * @param duration duration of the song. duration! = null && duration> 01:00.
+     * @param gender gender of the song.
+     * @return
+     */
     
     public String addPoolSong(String title, String artistName, String releaseDate, String duration, int gender){
         Song addSong = new Song(title, artistName, releaseDate, duration, gender);
@@ -115,7 +156,15 @@ public class MCS {
         }
         return addTrue;
     }
-
+    
+    
+    /**
+     * Show the information of all the songs in the pool. <br>
+     * <b> pre: </b> There must be songs added in the song pool <br>
+     * <b> post: </b> All the information of the songs of the poool is returned.
+     * @return
+     */
+    
     public String showSongs(){
     
         String allInfo = "";
@@ -136,7 +185,15 @@ public class MCS {
         return allInfo;
     }
     
-    //PlayList privada
+    
+    /**
+     * Add private playList. <br>
+     * <b> pre: </b> A user must be logged in. <br>
+     * <b> post: </b> Add private playList.
+     * @param name name of the playList. name! = null.
+     * @return
+     */
+    
     public String addPrivatePL(String name){ //Añadir playList privada
         String addTrue = "Debes logearte primero";
         if(userAccess > -1){
@@ -158,7 +215,14 @@ public class MCS {
         return addTrue;
     }
     
-   //PLayList restringidas
+   /**
+     * Add restricted playList. <br>
+     * <b> pre: </b> A user must be logged in. <br>
+     * <b> post: </b> Add private playList.
+     * @param name name of the playList. name! = null.
+     * @return
+     */
+   
     public String addRestrictedPL(String name){  //Añadir playList restringida
         String addTrue = "Debes logearte primero.";
         
@@ -181,6 +245,14 @@ public class MCS {
         return addTrue;
     }
     
+    
+    /**
+     * Update all playlists. <br>
+     * <b> pre: </b> PlayLists created <br>
+     * <b> post: </b> All available playlists are updated.
+     * @return
+     */
+    
     public String upgrapePlayList(){
     
         String durationUpgrape = "";
@@ -197,6 +269,16 @@ public class MCS {
         return durationUpgrape; 
     }
    
+    
+    /**
+     * Give access to restricted playList. <br>
+     * <b> pre: </b> Restricted PLay created. <br>
+     * <b> post: </b> A user is given access to a restricted playList.
+     * @param restrictedPL playList selected by user. restrictedPL! = null.
+     * @param userAccess user selected to give you access. userAccess 1 = null.
+     * @return
+     */
+    
     public String addUserAccess(int restrictedPL, int userAccess){
         String addUser = "";
         
@@ -206,7 +288,14 @@ public class MCS {
         return addUser;
     }
     
-    //PlayList publicas
+    /**
+     * Add public playList. <br>
+     * <b> pre: </b>  <br>
+     * <b> post: </b> Add private playList.
+     * @param name name of the playList. name! = null.
+     * @return
+     */
+    
     public String addPublicPL(String name){
         String addTrue = "";
         PublicPL newPlayList = new PublicPL(name);
@@ -224,6 +313,15 @@ public class MCS {
         return addTrue;
     }
     
+    /**
+     * Add rating to public playList. <br>
+     * <b> pre: </b> You must have created at least one public playList. <br>
+     * <b> post: </b> Add grade to public playList.
+     * @param playList public playList selected to be rated. playList! = null.
+     * @param calification qualification of the playList. qualification> = 0 && 5> = qualification.
+     * @return
+     */
+    
     public String addCalificationPL(int playList, float calification){
         
         String addTrue = "";
@@ -233,6 +331,15 @@ public class MCS {
                 
         return addTrue;
     }
+    
+    /**
+     * Add song to private playlist <br>
+     * <b> pre: </b> private playList created and song available <br>
+     * <b> post: </b> Song from pool is added to playList
+     * @param playList playList selected by user. playList! = null.
+     * @param song song selected by the pool user. song 1 = null.
+     * @return
+     */
     
     public String addSongPrivate(int playList, int song){
     
@@ -244,6 +351,16 @@ public class MCS {
         return addTrue;
     }
     
+    /**
+     * Add song to restricted playlist <br>
+     * <b> pre: </b> private playList created and song available <br>
+     * <b> post: </b> Song from pool is added to playList
+     * @param playList playList selected by user. playList! = null.
+     * @param song song selected by the pool user. song 1 = null.
+     * @return
+     */
+    
+    
     public String addSongRestricted(int playList, int song){
     
         String addTrue;
@@ -254,6 +371,16 @@ public class MCS {
         return addTrue;
     }
     
+    /**
+     * Add song to public playlist <br>
+     * <b> pre: </b> private playList created and song available <br>
+     * <b> post: </b> Song from pool is added to playList
+     * @param playList playList selected by user. playList! = null.
+     * @param song song selected by the pool user. song 1 = null.
+     * @return
+     */
+    
+    
     public String addSongPublic(int playList, int song){
     
         String addTrue;
@@ -263,6 +390,13 @@ public class MCS {
         
         return addTrue;
     }
+    
+    /**
+     * Show playlist information <br>
+     * <b> pre: </b> PLayLists available. for
+     * <b> post: </b> The information of the available playlists is displayed.
+     * @return
+     */
     
     public String showPlayList(){
         String allInfo = "";
